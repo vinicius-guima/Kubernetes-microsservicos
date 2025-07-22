@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: viniguima/java-gateway-k8s:v2
+        image: viniguima/java-gateway-k8s:v3
         ports:
         - containerPort: 80
         env:
@@ -42,9 +42,10 @@ spec:
       labels:
         app: pagamentos
     spec:
+      hostname: pagamentos-ms
       containers:
       - name: pagamentos
-        image: viniguima/java-pagamentos-k8s:v2
+        image: viniguima/java-pagamentos-k8s:v4
         ports:
         - containerPort: 80
         env:
@@ -85,9 +86,10 @@ spec:
       labels:
         app: pedidos
     spec:
+      hostname: pedidos-ms
       containers:
       - name: pedidos
-        image: viniguima/java-pedidos-k8s:v2
+        image: viniguima/java-pedidos-k8s:v3
         ports:
         - containerPort: 80
         env:
@@ -113,26 +115,28 @@ spec:
               key: DB_PASSWORD
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: server
-  labels:
-    app: server
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: server
+  serviceName: "server"
+  replicas: 2
+  minReadySeconds: 10
   template:
     metadata:
       labels:
         app: server
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - name: server
         image: viniguima/java-server-k8s:v3
         ports:
         - containerPort: 8081
+          name: server
         env:
         - name: SERVER_HOST
           valueFrom:
