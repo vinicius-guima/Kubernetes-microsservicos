@@ -4,9 +4,8 @@ metadata:
   name: volume-mysql
 spec:
   accessModes:
-    - ReadWriteOnce
-  volumeMode: Filesystem
+  - ReadWriteOnce
   resources:
     requests:
       storage: 16Gi
-  storageClassName: sci-hostpath-cs
+  storageClassName: csi-hostpath-sc

@@ -1,0 +1,3 @@
+--build docker build -t viniguima/java-server-k8s:v3 server/; docker build -t viniguima/java-pedidos-k8s:v2 pedidos/; docker build -t viniguima/java-pagamentos-k8s:v2 pagamentos/; docker build -t viniguima/java-gateway-k8s:v2 gateway/
+
+--push docker push viniguima/java-gateway-k8s:v2; docker push viniguima/java-pagamentos-k8s:v2; docker push viniguima/java-pedidos-k8s:v2; docker push viniguima/java-server-k8s:v3;
